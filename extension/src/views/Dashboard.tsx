@@ -205,6 +205,7 @@ export function Dashboard() {
       
       {/* Content */}
       <div className="px-3 z-10 relative">
+        {activeTab === 'tokens' ? (
           <div className="flex flex-col gap-2">
            <div className="flex items-center justify-between p-4 rounded-[20px] glass-button cursor-pointer" onClick={() => navigate('/send')}>
                <div className="flex items-center gap-4">
