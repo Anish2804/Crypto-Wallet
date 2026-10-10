@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 export interface WalletState {
   isLocked: boolean;
   hasVault: boolean;
+  wallets: { id: string, name: string, evmAddress?: string }[];
+  activeWalletId: string | null;
   accounts: {
     solana: string[];
     evm: string[];
@@ -14,6 +16,8 @@ export function useWalletState() {
   const [state, setState] = useState<WalletState>({
     isLocked: true,
     hasVault: false,
+    wallets: [],
+    activeWalletId: null,
     accounts: { solana: [], evm: [], btc: [] }
   });
 
@@ -112,6 +116,54 @@ export function getSwapQuote(sellToken: string, buyToken: string, amount: string
       });
     } else {
       resolve({ quote: "0.00" });
+    }
+  });
+}
+
+export function addAccount(): Promise<any> {
+  return new Promise((resolve) => {
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      chrome.runtime.sendMessage({ type: "ADD_ACCOUNT" }, (response) => {
+        resolve(response);
+      });
+    } else {
+      resolve({ success: false });
+    }
+  });
+}
+
+export function addWallet(mnemonic: string[]): Promise<any> {
+  return new Promise((resolve) => {
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      chrome.runtime.sendMessage({ type: "ADD_WALLET", payload: { mnemonic } }, (response) => {
+        resolve(response);
+      });
+    } else {
+      resolve({ success: false });
+    }
+  });
+}
+
+export function switchWallet(id: string): Promise<any> {
+  return new Promise((resolve) => {
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      chrome.runtime.sendMessage({ type: "SWITCH_WALLET", payload: { id } }, (response) => {
+        resolve(response);
+      });
+    } else {
+      resolve({ success: false });
+    }
+  });
+}
+
+export function deleteWallet(id: string): Promise<any> {
+  return new Promise((resolve) => {
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      chrome.runtime.sendMessage({ type: "DELETE_WALLET", payload: { id } }, (response) => {
+        resolve(response);
+      });
+    } else {
+      resolve({ success: false });
     }
   });
 }

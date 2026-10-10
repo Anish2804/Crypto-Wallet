@@ -26,13 +26,14 @@ export function Onboarding() {
 
   if (state.hasVault) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-background text-text p-6">
-        <div className="flex-1 flex flex-col items-center justify-center w-full">
-          <div className="w-24 h-24 bg-white rounded-full mb-8 flex items-center justify-center shadow-2xl shadow-white/10 p-3">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-mesh text-text p-6 relative">
+        <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none"></div>
+        <div className="flex-1 flex flex-col items-center justify-center w-full z-10 relative">
+          <div className="w-24 h-24 bg-white rounded-full mb-8 flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.3)] p-3">
             <img src="/logo.png" alt="Nova Logo" className="w-full h-full object-contain" />
           </div>
           
-          <h1 className="text-3xl font-extrabold mb-8 tracking-tight">Welcome Back</h1>
+          <h1 className="text-3xl font-extrabold mb-8 tracking-tight text-gradient">Welcome Back</h1>
           
           <div className="flex flex-col w-full gap-4 mb-8">
             <input 
@@ -54,14 +55,15 @@ export function Onboarding() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background text-text p-6">
-      <div className="flex-1 flex flex-col items-center justify-center w-full">
-        <div className="w-24 h-24 bg-white rounded-full mb-8 flex items-center justify-center shadow-2xl shadow-white/10 p-3 transform hover:scale-105 transition">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-mesh text-text p-6 relative">
+      <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none"></div>
+      <div className="flex-1 flex flex-col items-center justify-center w-full z-10 relative">
+        <div className="w-24 h-24 bg-white rounded-full mb-8 flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.3)] p-3 transform hover:scale-105 transition duration-500">
           <img src="/logo.png" alt="Nova Logo" className="w-full h-full object-contain" />
         </div>
         
-        <h1 className="text-4xl font-extrabold mb-3 tracking-tight">NOVA</h1>
-        <p className="text-slate-400 mb-10 text-center text-base leading-relaxed max-w-xs">
+        <h1 className="text-[44px] font-extrabold mb-3 tracking-tight text-gradient drop-shadow-xl">NOVA</h1>
+        <p className="text-slate-300 mb-10 text-center text-[15px] leading-relaxed max-w-xs font-medium">
           Your secure, self-custodial portal to the multi-chain universe.
         </p>
 

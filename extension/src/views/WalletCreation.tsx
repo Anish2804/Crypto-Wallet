@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { ArrowLeft, Copy, Check, AlertTriangle } from 'lucide-react';
-import { generateMnemonic, createVault } from '../hooks/useWallet';
+import { generateMnemonic, createVault, addWallet } from '../hooks/useWallet';
 
 export function WalletCreation() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAddingWallet = new URLSearchParams(location.search).get('addWallet') === 'true';
   const [step, setStep] = useState(1);
   const [copied, setCopied] = useState(false);
   const [mnemonic, setMnemonic] = useState<string[]>([]);
@@ -36,9 +38,11 @@ export function WalletCreation() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background text-text p-6">
-      <div className="flex items-center mb-6">
-        <button onClick={() => step === 1 ? navigate(-1) : setStep(step - 1)} className="p-2 -ml-2 text-slate-400 hover:text-white transition">
+    <div className="flex flex-col min-h-screen bg-mesh text-text p-6 relative">
+      <div className="absolute inset-0 bg-black/40 z-0 pointer-events-none"></div>
+      
+      <div className="flex items-center mb-6 z-10 relative">
+        <button onClick={() => step === 1 ? navigate(-1) : setStep(step - 1)} className="p-2 -ml-2 text-slate-300 hover:text-white transition">
           <ArrowLeft size={24} />
         </button>
         <h2 className="text-xl font-bold ml-2">
@@ -47,19 +51,19 @@ export function WalletCreation() {
       </div>
 
       {step === 1 && (
-        <div className="flex-1 flex flex-col">
-          <div className="bg-orange-500/10 border border-orange-500/20 p-4 rounded-xl mb-6 flex gap-3">
-            <AlertTriangle className="text-orange-500 shrink-0" size={24} />
-            <p className="text-sm text-orange-200">
+        <div className="flex-1 flex flex-col z-10 relative">
+          <div className="glass-panel bg-orange-500/10 border-orange-500/30 p-4 rounded-xl mb-6 flex gap-3">
+            <AlertTriangle className="text-orange-400 shrink-0" size={24} />
+            <p className="text-sm text-orange-100/90 font-medium leading-relaxed">
               Write down this secret recovery phrase and keep it safe. If you lose it, you will lose access to your funds forever.
             </p>
           </div>
 
           <div className="grid grid-cols-3 gap-3 mb-6">
             {mnemonic.map((word, i) => (
-              <div key={i} className="bg-surface border border-slate-700 py-2 px-3 rounded-lg flex gap-2 items-center">
-                <span className="text-xs text-slate-500 w-4">{i + 1}.</span>
-                <span className="text-sm font-medium">{word}</span>
+              <div key={i} className="glass-panel py-2.5 px-3 rounded-lg flex gap-2 items-center justify-center">
+                <span className="text-[11px] text-slate-400/80">{i + 1}.</span>
+                <span className="text-[15px] font-bold text-white tracking-wide">{word}</span>
               </div>
             ))}
           </div>
@@ -70,14 +74,20 @@ export function WalletCreation() {
           </button>
 
           <div className="mt-8">
-            <Button fullWidth onClick={() => setStep(2)}>I saved my recovery phrase</Button>
+            <Button fullWidth onClick={() => {
+              if (isAddingWallet) {
+                addWallet(mnemonic).then(() => navigate('/dashboard'));
+              } else {
+                setStep(2);
+              }
+            }}>I saved my recovery phrase</Button>
           </div>
         </div>
       )}
 
       {step === 2 && (
-        <div className="flex-1 flex flex-col">
-          <p className="text-slate-400 text-sm mb-6">
+        <div className="flex-1 flex flex-col z-10 relative">
+          <p className="text-slate-300 text-sm mb-6 leading-relaxed font-medium">
             This password will unlock your NOVA wallet on this device only. It cannot be used to recover your wallet.
           </p>
           
@@ -87,14 +97,14 @@ export function WalletCreation() {
               placeholder="New Password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-surface border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition"
+              className="glass-panel rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/40 transition placeholder:text-slate-400 font-medium"
             />
             <input 
               type="password" 
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="bg-surface border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary transition"
+              className="glass-panel rounded-xl px-5 py-4 text-white focus:outline-none focus:border-white/40 transition placeholder:text-slate-400 font-medium"
             />
             <div className="flex items-start gap-2 mt-2">
                <input type="checkbox" id="terms" className="mt-1" />

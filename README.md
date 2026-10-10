@@ -1,36 +1,58 @@
 # NOVA Wallet 🌌
 
-**NOVA Wallet** is a premium, self-custodial browser extension wallet built for the Solana and Ethereum (EVM) ecosystems. Designed with a focus on high-end UI/UX, uncompromising security, and real-time blockchain analytics.
+**NOVA** is a blazing-fast, beautiful, and secure self-custodial multi-chain cryptocurrency wallet designed as a browser extension. It takes inspiration from industry-leading wallets like Phantom but elevates the aesthetic with modern glassmorphism, dynamic animations, and extreme user-friendliness.
+
+![NOVA Wallet Banner](https://via.placeholder.com/1200x600/0f172a/ffffff?text=NOVA+Wallet)
 
 ## ✨ Features
 
-- **True Self-Custody**: Your keys, your crypto. Mnemonic phrases are securely encrypted locally using AES-GCM and never touch a centralized server.
-- **Multi-Chain Support**: Seamlessly manage assets across both Solana (Mainnet) and Ethereum (EVM) networks from a single interface.
-- **Premium UI/UX**: A dark-mode, Phantom-inspired design with floating island cards, smooth CSS animations, bespoke scrollbars, and tactile feedback.
-- **Live Market Data**: Real-time pricing and 24h portfolio performance metrics powered by the CoinGecko API.
-- **Integrated Fiat On-Ramp**: Purchase Solana instantly with fiat (INR/UPI) directly inside the wallet via the Onramp.money integration.
-- **Session Security**: In-memory state management ensuring your wallet locks securely when the session ends.
+- **Multi-Chain Support**: Manage Ethereum (EVM), Solana, and Bitcoin all in one unified interface.
+- **Multi-Wallet Architecture**: Create distinct wallets (each with its own 12-word recovery phrase) and switch between them instantly.
+- **HD Derivation**: Infinite accounts derived from a single wallet seed (`m/44'/60'/0'/0/i`, `m/44'/501'/i'/0'`, `m/84'/0'/0'/0/i`).
+- **Phantom-style UI/UX**: Slide-up drawer for managing and switching between accounts seamlessly. Bottom navigation for immediate access to Swap, Activity, and Tokens.
+- **Top-Tier Security**: Mnemonics are encrypted with Web Crypto API (`AES-GCM`) before ever hitting `chrome.storage.local`. Decrypted keys live strictly in `session` storage and memory, ensuring they're wiped on browser lock.
+- **Beautiful Aesthetic**: Fluid animations, rich dark-mode colors, gradients, and custom scrollbars to WOW your users.
+- **dApp Connection**: Seamlessly connects to web3 websites with a built-in transaction approval pop-up.
+
+## 🚀 Quick Start (For Interviewers & Testers)
+
+Since this is an unpacked extension, you can install and test it in 10 seconds:
+
+1. **Clone this repository** (or download the ZIP and extract it).
+2. Open your terminal and run the following commands to install dependencies and build:
+   ```bash
+   npm install
+   npm run build
+   ```
+3. Open Google Chrome (or Brave/Edge) and navigate to `chrome://extensions`.
+4. Enable **Developer Mode** using the toggle in the top right corner.
+5. Click **"Load unpacked"** and select the `dist` folder located inside the `extension` directory.
+6. **Done!** Pin NOVA to your extension bar and click it to get started.
 
 ## 🛠 Tech Stack
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS (v4)
-- **Blockchain**: `@solana/web3.js`, `ethers.js`
-- **Cryptography**: Standard Web Crypto API (`AES-GCM`, `PBKDF2`) for vault encryption.
-- **Build Tool**: Vite, producing a highly optimized Manifest V3 Chrome Extension.
-
-## 🚀 How to Install & Test (Developer Mode)
-
-Since this extension is actively in development and not yet published to the Chrome Web Store, you can install it directly from the source code in seconds:
-
-1. **Download the Release**: Download the `nova-wallet.zip` from the [Releases](#) section of this repository and extract it to a folder. *(Alternatively, clone this repo, run `npm install`, and `npm run build` in the `extension` folder to generate the `dist` folder)*.
-2. **Open Extensions**: Open Google Chrome and navigate to `chrome://extensions/` in your URL bar.
-3. **Enable Developer Mode**: Toggle the **Developer mode** switch in the top right corner.
-4. **Load Unpacked**: Click the **Load unpacked** button in the top left and select the `dist` folder you just extracted or built.
-5. **Pin & Launch**: Pin the NOVA Wallet to your toolbar and click to open!
+- **React 18**: Component-based UI architecture.
+- **Vite**: Next-generation frontend tooling for ultra-fast builds.
+- **Tailwind CSS**: Utility-first CSS for the stunning UI, custom gradients, and glassmorphism.
+- **TypeScript**: End-to-end type safety.
+- **ethers.js / viem**: For EVM interactions and mnemonic generation.
+- **@solana/web3.js**: For native Solana blockchain support.
+- **@scure/btc-signer / bip32**: For Bitcoin SegWit interactions.
+- **Chrome Extension API (Manifest V3)**: The backbone of the background service worker, storage, and message passing.
 
 ## 📸 Screenshots
 
-*(Add screenshots of your Dashboard, Onboarding, and Swap screens here)*
+| Dashboard | Drawer (Multi-Wallet) |
+| :---: | :---: |
+| ![Dashboard](https://via.placeholder.com/300x500/0f172a/ffffff?text=Dashboard) | ![Drawer](https://via.placeholder.com/300x500/0f172a/ffffff?text=Wallet+Switching) |
 
----
-*Built as a showcase of modern web3 extension architecture and premium frontend design.*
+## 🏗 Architecture
+
+NOVA operates completely locally. Your private keys never leave your device.
+- `background.ts`: The central nervous system. Manages state, listens to dApp requests, handles auto-locking, and executes transactions.
+- `vault.ts`: Handles secure encryption/decryption, wallet addition, removal, and Hierarchical Deterministic (HD) derivations.
+- `crypto.ts`: Wraps `window.crypto.subtle` for fast, native AES-GCM encryption.
+
+## 📜 License
+
+MIT License. Do whatever you want with it! 🚀

@@ -46,6 +46,26 @@ chrome.runtime.onMessage.addListener((message: any, _sender: chrome.runtime.Mess
     sendResponse({ success, state: await vault.getState() });
     return;
   }
+  else if (message.type === "ADD_ACCOUNT") {
+    const success = await vault.addAccount();
+    sendResponse({ success, state: await vault.getState() });
+    return;
+  }
+  else if (message.type === "ADD_WALLET") {
+    const success = await vault.addWallet(message.payload.mnemonic);
+    sendResponse({ success, state: await vault.getState() });
+    return;
+  }
+  else if (message.type === "SWITCH_WALLET") {
+    const success = await vault.switchWallet(message.payload.id);
+    sendResponse({ success, state: await vault.getState() });
+    return;
+  }
+  else if (message.type === "DELETE_WALLET") {
+    const success = await vault.deleteWallet(message.payload.id);
+    sendResponse({ success, state: await vault.getState() });
+    return;
+  }
   else if (message.type === "UNLOCK_VAULT") {
     const success = await vault.unlock(message.payload.password);
     sendResponse({ success, state: await vault.getState() });
