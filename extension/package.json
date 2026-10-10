@@ -1,0 +1,43 @@
+{
+  "name": "extension",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@scure/bip32": "^2.4.0",
+    "@scure/btc-signer": "^2.4.1",
+    "@solana/web3.js": "^1.99.0",
+    "bip39": "^3.1.0",
+    "buffer": "^6.0.3",
+    "ed25519-hd-key": "^2.0.0",
+    "lucide-react": "^1.54.0",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4",
+    "tweetnacl": "^1.0.3",
+    "viem": "^2.57.4"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.33",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/bip39": "^2.4.2",
+    "@types/chrome": "^0.3.5",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.6.1",
+    "oxlint": "^1.81.0",
+    "postcss": "^8.5.29",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}
